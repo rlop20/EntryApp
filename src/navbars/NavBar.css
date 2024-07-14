@@ -1,14 +1,39 @@
 .navbar {
-    width: 100%;
-    background-color: #000000;
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-  }
-  
-  .navbar-title {
-    color: #fff;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+}
+
+.navbar-title {
+  font-size: 24px;
+  margin-right: auto;
+}
+
+.navbar-home, .navbar-search, .navbar-list {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  margin: 0 10px;
+}
+
+.navbar-home:hover, .navbar-search:hover, .navbar-list:hover {
+  text-decoration: underline;
+}
+
+.navbar-login {
+  margin-left: auto; /* Aligns the login button to the far right */
+}
+
+.navbar-login-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-login-link svg {
+  margin-right: 5px; /* Space between icon and text */
+}

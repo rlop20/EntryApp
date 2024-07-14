@@ -22,18 +22,9 @@ const useWindowSize = () => {
   return windowSize;
 };
 
-const VideoBar = ({ videos }) => {
-  const size = useWindowSize();
+const VideoBar = ({ videos, title }) => {
   const [startIndex, setStartIndex] = useState(0);
-
-  const getVisibleCount = () => {
-    if (size.width >= 1200) return 5;
-    if (size.width >= 800) return 4;
-    if (size.width >= 600) return 3;
-    return 2;
-  };
-
-  const visibleCount = getVisibleCount();
+  const visibleCount = 6;
 
   const handlePrevClick = () => {
     setStartIndex(prevIndex => Math.max(prevIndex - visibleCount, 0));
@@ -47,7 +38,7 @@ const VideoBar = ({ videos }) => {
 
   return (
     <div className="video-bar">
-      <h2>Topic One</h2>
+      <h2>{title}</h2>
       <div className="video-container">
         <button onClick={handlePrevClick} disabled={startIndex === 0} className="nav-button">◀</button>
         <div className="video-row">
