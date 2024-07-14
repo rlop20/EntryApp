@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './VideoBar.css';
 
 const useWindowSize = () => {
@@ -44,7 +45,9 @@ const VideoBar = ({ videos, title }) => {
         <div className="video-row">
           {visibleVideos.map((video, index) => (
             <div className="video-item" key={index}>
-              <img src={video.thumbnail} alt={video.title} className="video-thumbnail" />
+              <Link to={`/topic${index + 1}`}>
+                <img src={video.thumbnail} alt={video.title} className="video-thumbnail" />
+              </Link>
               <p className="video-title">{video.title}</p>
             </div>
           ))}
