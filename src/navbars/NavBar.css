@@ -1,24 +1,44 @@
+
+/* Prevent horizontal scrolling */
+body, html {
+  overflow-x: hidden;
+}
+
 .navbar {
   display: flex;
   align-items: center;
   padding: 10px 20px;
   background-color: #000;
   color: #fff;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1; /* Ensure the navbar is on top of other elements */
 }
 
 .navbar-title {
   font-size: 24px;
-  margin-right: auto;
+  margin-right: auto; /* Align title to the left */
 }
 
-.navbar-home, .navbar-search, .navbar-list {
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the icons */
+  flex-grow: 1; /* Allow the icons to take up available space */
+}
+
+.navbar-home, .navbar-search, .navbar-list, .navbar-login-link {
   color: #fff;
   text-decoration: none;
   font-size: 20px;
   margin: 0 10px;
+  display: flex;
+  align-items: center;
 }
 
-.navbar-home:hover, .navbar-search:hover, .navbar-list:hover {
+.navbar-home:hover, .navbar-search:hover, .navbar-list:hover, .navbar-login-link:hover {
   text-decoration: underline;
 }
 
@@ -26,14 +46,113 @@
   margin-left: auto; /* Aligns the login button to the far right */
 }
 
+.hamburger-icon {
+  display: none;
+  font-size: 40px; /* Increase the size of the icon */
+  cursor: pointer;
+  padding: 20px; /* Add padding for better clickability */
+  color: #fff; /* Ensure the color matches the navbar */
+}
+
+.hamburger-icon:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Add a hover effect */
+  border-radius: 5px; /* Optional: Add rounded corners */
+}
+
 .navbar-login-link {
+  background: none;
+  border: none;
   color: #fff;
-  text-decoration: none;
+  cursor: pointer;
   font-size: 20px;
   display: flex;
   align-items: center;
+  padding: 0;
 }
 
-.navbar-login-link svg {
-  margin-right: 5px; /* Space between icon and text */
+.navbar-login-link:hover {
+  text-decoration: underline;
+}
+
+/* Sidebar styles */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: flex-end;
+  z-index: 1000; /* Ensure the overlay is on top of other elements */
+}
+
+.sidebar-overlay.open {
+  display: flex;
+}
+
+.sidebar {
+  width: 75%; /* Adjust width for better visibility */
+  max-width: 300px;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: relative;
+  z-index: 1001; /* Ensure the sidebar is on top of the overlay */
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(100%); /* Initially hide the sidebar */
+}
+
+.sidebar.open {
+  transform: translateX(0); /* Show the sidebar when open */
+}
+
+.close-icon {
+  font-size: 24px;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.sidebar-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  margin: 10px 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sidebar-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-icons {
+    display: none;
+  }
+
+  .hamburger-icon {
+    display: block;
+  }
+
+  .sidebar-overlay.open {
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar-icons {
+    justify-content: flex-start; /* Align navigation options to the left */
+  }
+
+  .navbar-login {
+    margin-left: 20px; /* Separate the login button from the navigation options */
+  }
 }
