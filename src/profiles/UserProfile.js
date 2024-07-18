@@ -13,6 +13,7 @@ const UserProfile = () => {
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newDisplayName, setNewDisplayName] = useState('');
+  const [unlockedCourses, setUnlockedCourses] = useState([]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -20,7 +21,9 @@ const UserProfile = () => {
         const userDocRef = doc(db, 'users', uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-          setUser(userDoc.data());
+          const userData = userDoc.data();
+          setUser(userData);
+          setUnlockedCourses(userData.unlockedCourses || []);
         } else {
           setError('No such document!');
         }
@@ -90,10 +93,29 @@ const UserProfile = () => {
 
   return (
     <div className="user-profile">
+
+<section className='unlocked-courses'>
+            <h1></h1>
+            <h1>Unlocked Courses</h1>
+            {unlockedCourses.length > 0 ? (
+              <ul>
+                {unlockedCourses.map((course, index) => (
+                  <li key={index}>{course}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No courses unlocked yet.</p>
+            )}
+          </section>
+
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {user ? (
+
+        
         <div className="profile-details">
           <h1>Manage Your Account</h1>
+          
+
           <p>{user.displayName}</p>
           <p>{user.email}</p>
 

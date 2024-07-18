@@ -1,31 +1,101 @@
 /* UserProfile.css */
 .user-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #282c34;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-height: 100vh; /* Ensures it takes the full height of the viewport */
+  background-color: #282c34;
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 20px;
+  padding-top: 100px;
+  box-sizing: border-box;
+}
+
+.user-profile h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.unlocked-courses {
+  background-color: #282c34;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.unlocked-courses h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.unlocked-courses ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.unlocked-courses li {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.update-section, .delete-section {
+  background-color: #282c34;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.update-section h3, .delete-section h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.update-section input, .delete-section button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.update-section button, .delete-section button {
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.update-section button:hover, .delete-section button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .user-profile {
+    padding: 10px;
+    padding-top: 100px; 
 
   }
-  
+
   .user-profile h1 {
     font-size: 2em;
-    color: #ffffff;
-    margin-bottom: 10px;
   }
-  
-  .user-profile p {
+
+  .unlocked-courses h2 {
+    font-size: 1.5em;
+  }
+
+  .unlocked-courses li {
     font-size: 1.2em;
-    color: #ffffff;
   }
-  
-  .user-profile .profile-details {
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
+
+  .update-section h3, .delete-section h3 {
+    font-size: 1.2em;
   }
-  
+
+  .update-section input, .delete-section button {
+    font-size: 0.9em;
+  }
+}

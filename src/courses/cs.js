@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaLock } from 'react-icons/fa'; // Import a lock icon from react-icons
 import './courses.css'; // Import the new courses.css file
+import useAuth from '../useAuth'; // Import the custom hook
+import { db } from '../firebase'; // Import your Firestore instance
+import { doc, getDoc } from 'firebase/firestore'; // Import Firestore functions
 
-const cs = () => {
+const Cs = () => {
+  const currentUser = useAuth(); // Use the custom hook to get the current user
+  const [unlockedCourses, setUnlockedCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchUnlockedCourses = async () => {
+      if (currentUser) {
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setUnlockedCourses(userDoc.data().unlockedCourses || []);
+        }
+      }
+    };
+    fetchUnlockedCourses();
+  }, [currentUser]);
   const classes = [
     { name: 'Computer Science 101', link: '/cs101' },
-    { name: 'Computer Science 110', link: '/course2', locked: true },
+    { name: 'Computer Science 110', link: '/wip', locked: !unlockedCourses.includes('Computer Science 110') },
   ];
 
   return (
@@ -33,4 +51,4 @@ const cs = () => {
   );
 }
 
-export default cs;
+export default Cs;
