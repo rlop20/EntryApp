@@ -34,11 +34,8 @@ const NavBar = () => {
         <Link to="/" className="navbar-home">
           <FaHome /> Home
         </Link>
-        <Link to="/wip" className="navbar-search">
-          <FaSearch /> Search
-        </Link>
-        <Link to="/wip" className="navbar-list">
-          <FaList />List
+        <Link to="/start" className="navbar-search">
+          <FaSearch /> Courses
         </Link>
 
         {currentUser && (

@@ -20,7 +20,7 @@ import List from './list/List';
 import CS101 from './classes/cs101'
 import CS from './courses/cs'
 import Layout from './backButton/Layout';
-
+import Start from './start/Start'
 
 function App() {
   return (
@@ -28,6 +28,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/start" element={<Start />} />
         <Route path="/topic1" element={<Topic1 />} />
         <Route path="/topic2" element={<Topic2 />} />
         <Route path="/topic3" element={<Topic3 />} />

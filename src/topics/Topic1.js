@@ -15,7 +15,7 @@ const Topic1 = () => {
       await updateDoc(userDocRef, {
         unlockedCourses: arrayUnion('Computer Science 110')
       });
-      alert('Course unlocked!');
+      alert('Class Completed!');
     } else {
       navigate('/signin'); // Redirect to signup page if not logged in
     }
