@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FaLock } from 'react-icons/fa';
 import './VideoBar.css';
 
 const useWindowSize = () => {
@@ -62,10 +63,16 @@ const VideoBar = ({ videos, title }) => {
         <button onClick={handlePrevClick} disabled={startIndex === 0} className="nav-button">◀</button>
         <div className="video-row">
           {visibleVideos.map((video, index) => (
-            <div className="video-item" key={index}>
-              <Link to={video.link}>
-                <img src={video.thumbnail} alt={video.title} className="video-thumbnail" />
-              </Link>
+            <div className={`video-item ${video.locked ? 'locked' : ''}`} key={index}>
+              {video.locked ? (
+                <div className="video-lock-overlay">
+                  <FaLock className="lock-icon" />
+                </div>
+              ) : (
+                <Link to={video.link}>
+                  <img src={video.thumbnail} alt={video.title} className="video-thumbnail" />
+                </Link>
+              )}
               <p className="video-title">{video.title}</p>
             </div>
           ))}

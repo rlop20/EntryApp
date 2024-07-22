@@ -21,6 +21,10 @@ import CS101 from './classes/cs101'
 import CS from './courses/cs'
 import Layout from './backButton/Layout';
 import Start from './start/Start'
+import Privacy from './footer/Privacy'
+import Code from './footer/CodeOfConduct'
+import Terms from './footer/Terms'
+import Copyright from './footer/Copyright'
 
 function App() {
   return (
@@ -42,7 +46,11 @@ function App() {
         <Route path="/list" element={<List />} />
         <Route path="/cs" element={<CS />} />
         <Route path="/cs101" element={<CS101 />} />
-        <Route path="/profile/:uid" element={<UserProfile />} /> {/* Corrected path */}
+        <Route path="/privacy-policy" element={<Privacy />} />
+        <Route path="/code-of-conduct" element={<Code />} />
+        <Route path="/terms-of-service" element={<Terms />} />
+        <Route path="/copyright-policy" element={<Copyright />} />
+        <Route path="/profile/:uid" element={<UserProfile />} /> 
       </Routes>
       <Footer />
     </Router>

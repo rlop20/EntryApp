@@ -6,16 +6,20 @@ import { doc, updateDoc, arrayUnion } from 'firebase/firestore'; // Import Fires
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Topic1 = () => {
-  const currentUser = useAuth(); // Use the custom hook to get the current user
+  const { currentUser } = useAuth(); // Use the custom hook to get the current user
   const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleFinish = async () => {
     if (currentUser) {
-      const userDocRef = doc(db, 'users', currentUser.uid);
-      await updateDoc(userDocRef, {
-        unlockedCourses: arrayUnion('Computer Science 110')
-      });
-      alert('Class Completed!');
+      try {
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        await updateDoc(userDocRef, {
+          unlockedCourses: arrayUnion('cs1.1', 'cs1.2'),
+        });
+        alert('Class Completed!');
+      } catch (error) {
+        console.error("Error updating document: ", error);
+      }
     } else {
       navigate('/signin'); // Redirect to signup page if not logged in
     }

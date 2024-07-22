@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaBars, FaTimes, FaHome, FaSearch, FaUser, FaList, FaPlus } from 'react-icons/fa';
+import { FaBars, FaTimes, FaHome, FaSearch, FaUser } from 'react-icons/fa';
 import './NavBar.css';
 import { auth } from '../firebase';
 import useAuth from '../useAuth';
@@ -8,7 +8,7 @@ import { signOut } from 'firebase/auth';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const currentUser = useAuth();
+  const { currentUser, loading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -38,12 +38,12 @@ const NavBar = () => {
           <FaSearch /> Courses
         </Link>
 
-        {currentUser && (
+        {!loading && currentUser && (
           <Link to={`/profile/${currentUser.uid}`} className="navbar-list">Profile</Link>
         )}
 
         <div className="navbar-login">
-          {currentUser ? (
+          {!loading && currentUser ? (
             <button onClick={handleLogout} className="navbar-login-link">
               <FaUser /> Logout
             </button>
@@ -65,7 +65,7 @@ const NavBar = () => {
           <Link to="/" className="sidebar-link" onClick={toggleSidebar}>Home</Link>
           <Link to="/wip" className="sidebar-link" onClick={toggleSidebar}>Search</Link>
           <Link to="/wip" className="sidebar-link" onClick={toggleSidebar}>List</Link>
-          {currentUser ? (
+          {!loading && currentUser ? (
             <button onClick={handleLogout} className="sidebar-link">
               Logout
             </button>

@@ -1,7 +1,30 @@
 import React from 'react';
-import './topicCSS.css'
+import './topicCSS.css';
+import useAuth from '../useAuth'; // Import the custom hook
+import { db } from '../firebase'; // Import your Firestore instance
+import { doc, updateDoc, arrayUnion } from 'firebase/firestore'; // Import Firestore functions
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const Topic1 = () => {
+const Topic2 = () => {
+  const { currentUser } = useAuth(); // Destructure currentUser from the useAuth hook
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
+  const handleFinish = async () => {
+    if (currentUser) {
+      try {
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        await updateDoc(userDocRef, {
+          unlockedCourses: arrayUnion('cs1.3'),
+        });
+        alert('Class Completed!');
+      } catch (error) {
+        console.error("Error updating document: ", error);
+      }
+    } else {
+      navigate('/signin'); // Redirect to signup page if not logged in
+    }
+  };
+
   return (
     <div className='main'>
       <h1>What is Programming?</h1>
@@ -11,8 +34,13 @@ const Topic1 = () => {
         called IDEs, and save/run the code. Programming and code go hand and hand, we program
         by writing code.
       </p>
+
+      <button className="finish-button" onClick={handleFinish}>
+        {currentUser ? 'Finish' : 'Log in to finish'}
+      </button>
+      
     </div>
   );
 }
 
-export default Topic1;
+export default Topic2;

@@ -96,7 +96,7 @@ const UserProfile = () => {
 
 <section className='unlocked-courses'>
             <h1></h1>
-            <h1>Unlocked Courses</h1>
+            <h2>Unlocked Courses</h2>
             {unlockedCourses.length > 0 ? (
               <ul>
                 {unlockedCourses.map((course, index) => (
@@ -110,14 +110,13 @@ const UserProfile = () => {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {user ? (
-
         
         <div className="profile-details">
-          <h1>Manage Your Account</h1>
+          <h3>Manage Your Account</h3>
           
 
-          <p>{user.displayName}</p>
-          <p>{user.email}</p>
+          <p>Username: {user.username}</p>
+          <p>Email: {user.email}</p>
 
           <div className="update-section">
             <h3>Update Email</h3>

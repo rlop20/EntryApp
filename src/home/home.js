@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';
 import VideoBar from '../video/VideoBar';
 
 const Home = () => {
-
+  // State to indicate whether the user is signed in
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const cscourses = [
     { title: 'Computer Science', thumbnail: '/topic1-1.jpg', link: '/cs' },
   ];
@@ -26,8 +27,10 @@ const Home = () => {
         <b> To access Entry, create an account to keep track of your
         progress and unlock courses. </b> 
       </p>
-      <Link to="/signin">
-      <button className="sign-up-button">Sign up for free</button>
+      <Link to={isSignedIn ? "/start" : "/signin"}>
+        <button className="sign-up-button">
+          {isSignedIn ? "Start learning" : "Sign up for free"}
+        </button>
       </Link>
     </div>
   );
