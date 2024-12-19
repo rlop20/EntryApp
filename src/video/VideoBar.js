@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { FaLock } from 'react-icons/fa';
 import './VideoBar.css';
 
 const useWindowSize = () => {
@@ -22,9 +24,27 @@ const useWindowSize = () => {
   return windowSize;
 };
 
+const getVisibleCount = (width) => {
+  if (width >= 1200) return 5;
+  if (width >= 800) return 4;
+  if (width >= 600) return 3;
+  return 2;
+};
+
 const VideoBar = ({ videos, title }) => {
+  const size = useWindowSize();
   const [startIndex, setStartIndex] = useState(0);
-  const visibleCount = 6;
+  const [visibleCount, setVisibleCount] = useState(getVisibleCount(size.width));
+
+  useEffect(() => {
+    const newVisibleCount = getVisibleCount(size.width);
+    setVisibleCount(newVisibleCount);
+
+    // Adjust startIndex if necessary to keep the current view within bounds
+    if (startIndex + newVisibleCount > videos.length) {
+      setStartIndex(Math.max(0, videos.length - newVisibleCount));
+    }
+  }, [size.width, startIndex, videos.length]);
 
   const handlePrevClick = () => {
     setStartIndex(prevIndex => Math.max(prevIndex - visibleCount, 0));
@@ -43,8 +63,16 @@ const VideoBar = ({ videos, title }) => {
         <button onClick={handlePrevClick} disabled={startIndex === 0} className="nav-button">◀</button>
         <div className="video-row">
           {visibleVideos.map((video, index) => (
-            <div className="video-item" key={index}>
-              <img src={video.thumbnail} alt={video.title} className="video-thumbnail" />
+            <div className={`video-item ${video.locked ? 'locked' : ''}`} key={index}>
+              {video.locked ? (
+                <div className="video-lock-overlay">
+                  <FaLock className="lock-icon" />
+                </div>
+              ) : (
+                <Link to={video.link}>
+                  <img src={video.thumbnail} alt={video.title} className="video-thumbnail" />
+                </Link>
+              )}
               <p className="video-title">{video.title}</p>
             </div>
           ))}

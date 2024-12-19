@@ -1,33 +1,83 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaBars, FaTimes, FaHome, FaSearch, FaUser } from 'react-icons/fa';
 import './NavBar.css';
-import { faHome, faSearch, faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { auth } from '../firebase';
+import useAuth from '../useAuth';
+import { signOut } from 'firebase/auth';
 
 const NavBar = () => {
+  const navigate = useNavigate();
+  const { currentUser, loading } = useAuth();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/signin');
+    } catch (error) {
+      console.error('Error logging out: ', error);
+    }
+  };
+
   return (
-    <nav className="navbar">
-      <div className="navbar-title">Entry</div>
-
+    <div className="navbar">
       <Link to="/" className="navbar-home">
-        <FontAwesomeIcon icon={faHome} /> Home
+        <div className="navbar-title">Entry <sup>™</sup></div>
       </Link>
-
-      <Link to="/" className="navbar-search">
-        <FontAwesomeIcon icon={faSearch} /> Search
-      </Link>
-
-      <Link to="/" className="navbar-list">
-        <FontAwesomeIcon icon={faPlus} /> Courses
-      </Link>
-
-      <div className="navbar-login">
-        <Link to="/login" className="navbar-login-link">
-          <FontAwesomeIcon icon={faUser} /> Login
+      
+      <div className="navbar-icons">
+        <Link to="/" className="navbar-home">
+          <FaHome /> Home
         </Link>
+        <Link to="/start" className="navbar-search">
+          <FaSearch /> Courses
+        </Link>
+
+        {!loading && currentUser && (
+          <Link to={`/profile/${currentUser.uid}`} className="navbar-list">Profile</Link>
+        )}
+
+        <div className="navbar-login">
+          {!loading && currentUser ? (
+            <button onClick={handleLogout} className="navbar-login-link">
+              <FaUser /> Logout
+            </button>
+          ) : (
+            <Link to="/signin" className="navbar-login-link">
+              <FaUser /> Login
+            </Link>
+          )}
+        </div>
       </div>
-    </nav>
+      <div className="hamburger-icon" onClick={toggleSidebar}>
+        <FaBars />
+      </div>
+      <div className={`sidebar-overlay ${sidebarOpen ? 'open' : ''}`} onClick={toggleSidebar}>
+        <div className={`sidebar ${sidebarOpen ? 'open' : ''}`} onClick={(e) => e.stopPropagation()}>
+          <div className="close-icon" onClick={toggleSidebar}>
+            <FaTimes />
+          </div>
+          <Link to="/" className="sidebar-link" onClick={toggleSidebar}>Home</Link>
+          <Link to="/wip" className="sidebar-link" onClick={toggleSidebar}>Search</Link>
+          <Link to="/wip" className="sidebar-link" onClick={toggleSidebar}>List</Link>
+          {!loading && currentUser ? (
+            <button onClick={handleLogout} className="sidebar-link">
+              Logout
+            </button>
+          ) : (
+            <Link to="/signin" className="sidebar-link" onClick={toggleSidebar}>
+              Login
+            </Link>
+          )}
+        </div>
+      </div>
+    </div>
   );
-}
+};
 
 export default NavBar;
